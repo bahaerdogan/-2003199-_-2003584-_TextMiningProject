@@ -33,25 +33,19 @@ films = {
 
 output_data = []
 
-def scrape_reviews(film_name, base_url, sort_type, target_count=15):
+def scrape_reviews(film_name, film_url, target_count=25):
     comments = []
     page = 1
 
     while len(comments) < target_count * 2:
-        if sort_type == "lowest":
-            url = base_url.rstrip("/") + f"/reviews/by/entry-rating-lowest/page/{page}/"
-        elif sort_type == "highest":
-            url = base_url.rstrip("/") + f"/reviews/by/entry-rating/page/{page}/"
-        else:
-            raise ValueError("Sort type must be 'lowest' or 'highest'.")
-
-        print(f"Scraping {film_name} - {sort_type} - Page {page}...")
-
+        url = film_url.rstrip("/") + f"/reviews/page/{page}/"
+        print(f"Scraping {film_name} - Page {page}...")
+        
         response = requests.get(url, headers=headers)
         if response.status_code != 200:
             print(f"Failed to fetch {url}")
             break
-
+        
         soup = BeautifulSoup(response.text, "html.parser")
         review_blocks = soup.find_all("div", class_="body-text")
 
@@ -63,7 +57,7 @@ def scrape_reviews(film_name, base_url, sort_type, target_count=15):
             text = review.get_text(strip=True)
             if text and len(text) > 30:
                 comments.append(text)
-
+        
         page += 1
         time.sleep(random.uniform(0.5, 1.5))
 
@@ -71,19 +65,14 @@ def scrape_reviews(film_name, base_url, sort_type, target_count=15):
     selected_comments = comments[:target_count]
 
     for comment in selected_comments:
-        output_data.append({
-            "film": film_name,
-            "sort_type": sort_type,
-            "review": comment
-        })
+        output_data.append({"film": film_name, "review": comment})
 
 for film_name, film_url in films.items():
-    scrape_reviews(film_name, film_url, sort_type="lowest", target_count=15)
-    scrape_reviews(film_name, film_url, sort_type="highest", target_count=15)
+    scrape_reviews(film_name, film_url)
 
-with open("AllCommentsBalanced.csv", "w", newline="", encoding="utf-8") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=["film", "sort_type", "review"])
+with open("AllComments.csv", "w", newline="", encoding="utf-8") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=["film", "review"])
     writer.writeheader()
     writer.writerows(output_data)
 
-print("Scraping completed and saved to AllCommentsBalanced.csv!")
+print("Scraping completed and saved to AllComments.csv!")
