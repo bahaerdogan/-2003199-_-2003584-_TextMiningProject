@@ -1,4 +1,3 @@
-# LetterboxdScraper.py
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -71,7 +70,6 @@ def scrape_reviews(film_name, film_url, target_count=25):
 for film_name, film_url in films.items():
     scrape_reviews(film_name, film_url)
 
-# Tüm yorumları kaydet (filtrelenmemiş)
 with open("AllComments.csv", "w", newline="", encoding="utf-8") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=["film", "review"])
     writer.writeheader()

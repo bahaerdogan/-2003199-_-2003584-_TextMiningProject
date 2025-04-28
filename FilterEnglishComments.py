@@ -1,4 +1,3 @@
-# FilterEnglishComments.py
 import csv
 from langdetect import detect
 
@@ -15,9 +14,8 @@ with open(input_file, "r", encoding="utf-8") as infile:
             if detect(text) == "en":
                 filtered_data.append(row)
         except:
-            continue  # dil tespit hatalarında devam et
+            continue  
 
-# İngilizce yorumları kaydet
 with open(output_file, "w", newline="", encoding="utf-8") as outfile:
     writer = csv.DictWriter(outfile, fieldnames=["film", "review"])
     writer.writeheader()
