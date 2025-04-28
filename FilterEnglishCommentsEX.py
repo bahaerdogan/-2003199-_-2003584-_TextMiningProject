@@ -1,7 +1,7 @@
 import csv
 from langdetect import detect
 
-input_file = "AllCommentsBalanced.csv"
+input_file = "AllComments.csv"
 output_file = "CommentsEnglish.csv"
 
 filtered_data = []
@@ -17,7 +17,7 @@ with open(input_file, "r", encoding="utf-8") as infile:
             continue  
 
 with open(output_file, "w", newline="", encoding="utf-8") as outfile:
-    writer = csv.DictWriter(outfile, fieldnames=["film", "sort_type", "review"])
+    writer = csv.DictWriter(outfile, fieldnames=["film", "review"])
     writer.writeheader()
     writer.writerows(filtered_data)
 
