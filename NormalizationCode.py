@@ -1,8 +1,15 @@
 import re
 import csv
 
-input_file = "CommentsEnglish.csv"
-output_file = "CommentsEnglish_Normalized.csv"
+
+stopwords = {
+    'the', 'is', 'in', 'at', 'to', 'a', 'an', 'and', 'or', 'of', 'for', 'on', 'with', 'this', 'that',
+    'it', 'as', 'was', 'but', 'are', 'by', 'be', 'has', 'had', 'have', 'from', 'not', 'so', 'if', 'its',
+    'they', 'i', 'you', 'we', 'he', 'she', 'them', 'his', 'her', 'my', 'your', 'our', 'their', 'me', 'do'
+}
+
+input_file = "DatasetBeforeNormalization.csv"
+output_file = "DatasetAfternormalization.csv"
 
 normalized_data = []
 
@@ -16,8 +23,16 @@ def normalize_text(text):
     # 3. Remove digits
     text = re.sub(r'\d+', '', text)
     
-    # 4. Remove extra whitespace
+    # 4. Reduce repeated letters (e.g., "fannntastic" → "fantastic")
+    text = re.sub(r'(.)\1{2,}', r'\1', text)
+    
+    # 5. Remove extra whitespace
     text = re.sub(r'\s+', ' ', text).strip()
+    
+    # 6. Remove stopwords
+    words = text.split()
+    filtered_words = [word for word in words if word not in stopwords]
+    text = ' '.join(filtered_words)
     
     return text
 
