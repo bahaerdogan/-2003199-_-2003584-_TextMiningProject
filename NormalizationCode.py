@@ -37,18 +37,23 @@ def normalize_text(text):
 def main():
     input_file = 'DatasetBeforeNormalization.csv'        
     output_file = 'normalized_output.csv'  
-    text_column = 'text'                 
+    text_column = 'review'  
 
-    df = pd.read_csv(input_file)
+    try:
+        df = pd.read_csv(input_file, delimiter=';', on_bad_lines='warn')
+    except Exception as e:
+        print(f"cantreadfile- {e}")
+        return
 
     if text_column not in df.columns:
-        print(f"Hata: '{text_column}' adlı sütun bulunamadı.")
+        print(f"eerr '{text_column}' cant file columns.")
         return
 
     df['clean_text'] = df[text_column].apply(normalize_text)
 
     df.to_csv(output_file, index=False)
-    print(f"Normalizasyon tamamlandı. Çıktı dosyası: {output_file}")
+    print(f"outpt {output_file}")
+
 
 if __name__ == "__main__":
     main()
