@@ -256,27 +256,48 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=5,
     plt.legend(loc="best")
     return plt
 
-plot_learning_curve(grid_search.best_estimator_, 
-                   "Learning Curves", X_train, y_train, cv=5)
-save_plot(plt, 'learning_curves.png')
+def plot_metrics_comparison(y_test, y_pred):
+    metrics = {
+        'Accuracy': accuracy_score(y_test, y_pred),
+        'F1 Score': f1_score(y_test, y_pred, average='weighted'),
+        'Precision': precision_score(y_test, y_pred, average='weighted'),
+        'Recall': recall_score(y_test, y_pred, average='weighted')
+    }
+    
+    plt.figure(figsize=(10, 6))
+    plt.bar(metrics.keys(), metrics.values())
+    plt.title('Model Performance Metrics')
+    plt.ylim(0, 1)
+    for i, v in enumerate(metrics.values()):
+        plt.text(i, v + 0.02, f'{v:.3f}', ha='center')
+    save_plot(plt, 'metrics_comparison.png')
 
-def show_top_features(model, n=100):  
+def plot_feature_importance_heatmap(model, n_features=20):
     tfidf = model.named_steps['tfidf']
     clf = model.named_steps['clf']
     feature_names = tfidf.get_feature_names_out()
     
-    print("\nMost important features (for each class):")
-    for i, label in enumerate(clf.classes_):
-        top_features = np.argsort(clf.feature_log_prob_[i])[-n:]
-        print(f"\n{label.upper()}:")
-        for idx in top_features:
-            print(f"{feature_names[idx]}: {np.exp(clf.feature_log_prob_[i][idx]):.4f}")
+    feature_importance = np.abs(clf.feature_log_prob_)
+    avg_importance = np.mean(feature_importance, axis=0)
+    top_indices = np.argsort(avg_importance)[-n_features:]
+    
+    plt.figure(figsize=(12, 8))
+    sns.heatmap(feature_importance[:, top_indices], 
+                xticklabels=[feature_names[i] for i in top_indices],
+                yticklabels=clf.classes_,
+                cmap='YlOrRd')
+    plt.title('Feature Importance Heatmap')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    save_plot(plt, 'feature_importance_heatmap.png')
 
-show_top_features(grid_search.best_estimator_)
-
-cv_scores = cross_val_score(grid_search.best_estimator_, df['clean_text'], df['sentiment'], cv=5, scoring='f1_weighted')
-print("\nCross-validation scores:", cv_scores)
-print("Average CV score: %0.3f (+/- %0.3f)" % (cv_scores.mean(), cv_scores.std() * 2))
+def plot_class_distribution(y):
+    plt.figure(figsize=(8, 6))
+    sns.countplot(y=y)
+    plt.title('Class Distribution')
+    plt.xlabel('Class')
+    plt.ylabel('Count')
+    save_plot(plt, 'class_distribution.png')
 
 def analyze_feature_importance(model, X, y, n_features=100):  # Dramatically increased number of features to analyze
     tfidf = model.named_steps['tfidf']
@@ -295,4 +316,51 @@ def analyze_feature_importance(model, X, y, n_features=100):  # Dramatically inc
         print(f"{feature_names[idx]}: {avg_importance[idx]:.4f}")
 
 analyze_feature_importance(grid_search.best_estimator_, X_train, y_train)
+
+# Calculate cross-validation scores
+cv_scores = cross_val_score(grid_search.best_estimator_, df['clean_text'], df['sentiment'], cv=5, scoring='f1_weighted')
+print("\nCross-validation scores:", cv_scores)
+print("Average CV score: %0.3f (+/- %0.3f)" % (cv_scores.mean(), cv_scores.std() * 2))
+
+# Generate all visualizations
+plot_metrics_comparison(y_test, y_pred)
+plot_feature_importance_heatmap(grid_search.best_estimator_)
+plot_class_distribution(y_train)
+
+# Plot learning curves
+plot_learning_curve(grid_search.best_estimator_, 
+                   "Learning Curves", X_train, y_train, cv=5)
+save_plot(plt, 'learning_curves.png')
+
+# Plot confusion matrix with better styling
+plt.figure(figsize=(10, 8))
+cm = confusion_matrix(y_test, y_pred)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=grid_search.best_estimator_.named_steps['clf'].classes_,
+            yticklabels=grid_search.best_estimator_.named_steps['clf'].classes_)
+plt.title('Confusion Matrix')
+plt.ylabel('True Label')
+plt.xlabel('Predicted Label')
+save_plot(plt, 'confusion_matrix.png')
+
+# Plot cross-validation scores
+plt.figure(figsize=(8, 6))
+plt.boxplot(cv_scores)
+plt.title('Cross-validation Scores Distribution')
+plt.ylabel('F1 Score')
+save_plot(plt, 'cv_scores_distribution.png')
+
+def show_top_features(model, n=100):  
+    tfidf = model.named_steps['tfidf']
+    clf = model.named_steps['clf']
+    feature_names = tfidf.get_feature_names_out()
+    
+    print("\nMost important features (for each class):")
+    for i, label in enumerate(clf.classes_):
+        top_features = np.argsort(clf.feature_log_prob_[i])[-n:]
+        print(f"\n{label.upper()}:")
+        for idx in top_features:
+            print(f"{feature_names[idx]}: {np.exp(clf.feature_log_prob_[i][idx]):.4f}")
+
+show_top_features(grid_search.best_estimator_)
 
