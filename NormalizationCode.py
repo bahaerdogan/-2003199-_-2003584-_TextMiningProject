@@ -232,8 +232,8 @@ def read_raw_file(file_path):
     return pd.DataFrame(data)
 
 def main():
-    input_file = 'DatasetBeforeNormalization.csv'
-    output_file = 'normalized_output.csv'
+    input_file = 'movie_reviews_with_sentiment_normalized.xlsx - movie_reviews_with_sentiment_no.csv'
+    output_file = 'normalized_output_extra.csv'
     text_column = 'review'
     
     if not os.path.exists(input_file):
