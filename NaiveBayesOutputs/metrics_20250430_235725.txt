@@ -1,0 +1,136 @@
+Downloading NLTK punkt...
+Downloading NLTK stopwords...
+Downloading NLTK wordnet...
+Reading data...
+Balancing data...
+Preprocessing text data...
+Extracting additional features...
+Performing grid search...
+Fitting 5 folds for each of 180 candidates, totalling 900 fits
+
+Best parameters found:
+{'clf__alpha': 0.1, 'tfidf__max_df': 0.95, 'tfidf__max_features': 80000, 'tfidf__min_df': 1, 'tfidf__ngram_range': (1, 5)}
+
+Detailed Evaluation Metrics:
+
+Accuracy Score: 0.5193798449612403
+F1 Score (Weighted): 0.5063788503516856
+Precision Score (Weighted): 0.5128015194681861
+Recall Score (Weighted): 0.5193798449612403
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    negative       0.48      0.56      0.52        43
+     neutral       0.48      0.30      0.37        43
+    positive       0.58      0.70      0.63        43
+
+    accuracy                           0.52       129
+   macro avg       0.51      0.52      0.51       129
+weighted avg       0.51      0.52      0.51       129
+
+
+Top 100 Most Important Features:
+dangers conformity film s: 10.5842
+dangers conformity film s brilliance: 10.5842
+darkest: 10.5842
+grief trauma dangers: 10.5842
+subtle tension: 10.5842
+subtle tension kusama: 10.5842
+grief trauma dangers conformity: 10.5842
+grief trauma dangers conformity film: 10.5842
+guests: 10.5842
+guests motives: 10.5842
+guests motives tensionfilled: 10.5842
+guests motives tensionfilled atmosphere: 10.5842
+guests motives tensionfilled atmosphere lead: 10.5842
+dinner party quickly transforms slowburn: 10.5842
+dinner party quickly transforms: 10.5842
+dinner party quickly: 10.5842
+dinner party: 10.5842
+deeply grief trauma dangers conformity: 10.5842
+deeply grief trauma dangers: 10.5842
+deeply grief trauma: 10.5842
+deeply grief: 10.5842
+unease: 10.5842
+unease quiet: 10.5842
+unease quiet moments: 10.5842
+unease quiet moments subtle: 10.5842
+unease quiet moments subtle tension: 10.5842
+horror leaving: 10.5842
+horror leaving questioning: 10.5842
+horror leaving questioning perceptions: 10.5842
+horror leaving questioning perceptions choices: 10.5842
+human nature: 10.5842
+human nature darkest: 10.5842
+subtle tension kusama s: 10.5842
+subtle tension kusama s direction: 10.5842
+using claustrophobic: 10.5842
+using claustrophobic setting: 10.5842
+trauma dangers: 10.5842
+transforms slowburn thriller probes deeply: 10.5842
+lies: 10.5842
+lies ability: 10.5842
+lies ability evoke: 10.5842
+lies ability evoke unease: 10.5842
+lies ability evoke unease quiet: 10.5842
+transforms slowburn thriller probes: 10.5842
+transforms slowburn thriller: 10.5842
+transforms slowburn: 10.5842
+transforms: 10.5842
+evoke: 10.5842
+evoke unease: 10.5842
+evoke unease quiet: 10.5842
+evoke unease quiet moments: 10.5842
+seemingly innocuous dinner party quickly: 10.5842
+seemingly innocuous dinner party: 10.5842
+seemingly innocuous dinner: 10.5842
+seemingly innocuous: 10.5842
+evoke unease quiet moments subtle: 10.5842
+thriller probes deeply grief trauma: 10.5842
+thriller probes deeply grief: 10.5842
+thriller probes deeply: 10.5842
+climax invitation masterclass psychological horror: 10.5842
+climax invitation masterclass psychological: 10.5842
+climax invitation masterclass: 10.5842
+climax invitation: 10.5842
+claustrophobic setting amplify paranoia slow: 10.5842
+claustrophobic setting amplify paranoia: 10.5842
+trauma dangers conformity: 10.5842
+choices unsettling exploration human nature: 10.5842
+trauma dangers conformity film: 10.5842
+setting amplify paranoia: 10.5842
+using claustrophobic setting amplify: 10.5842
+using claustrophobic setting amplify paranoia: 10.5842
+utterly chilling: 10.5842
+utterly chilling climax: 10.5842
+utterly chilling climax invitation: 10.5842
+utterly chilling climax invitation masterclass: 10.5842
+conformity film s brilliance lies: 10.5842
+conformity film s brilliance: 10.5842
+conformity film s: 10.5842
+conformity film: 10.5842
+kusama s: 10.5842
+kusama s direction: 10.5842
+kusama s direction meticulous: 10.5842
+kusama s direction meticulous using: 10.5842
+direction meticulous: 10.5842
+direction meticulous using: 10.5842
+direction meticulous using claustrophobic: 10.5842
+direction meticulous using claustrophobic setting: 10.5842
+trauma dangers conformity film s: 10.5842
+lead utterly: 10.5842
+lead utterly chilling: 10.5842
+lead utterly chilling climax: 10.5842
+lead utterly chilling climax invitation: 10.5842
+leaving questioning: 10.5842
+leaving questioning perceptions: 10.5842
+leaving questioning perceptions choices: 10.5842
+leaving questioning perceptions choices unsettling: 10.5842
+setting amplify paranoia slow revelation: 10.5842
+setting amplify paranoia slow: 10.5842
+setting amplify: 10.5842
+ability: 10.5842
+
+Cross-validation scores: [0.52688172 0.4966077  0.54529909 0.5194502  0.55206733]
+Average CV score: 0.528 (+/- 0.039)

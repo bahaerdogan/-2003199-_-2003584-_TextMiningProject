@@ -12,7 +12,35 @@ import re
 from collections import Counter
 import string
 import warnings
+import os
+import sys
+from datetime import datetime
 warnings.filterwarnings('ignore')
+
+# Create output directory
+OUTPUT_DIR = '/Users/baha/MyWork/{2003199}_{2003584}_TextMiningProject/NaiveBayesOutputs'
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# Create a custom print function that writes to both console and file
+class TeeLogger:
+    def __init__(self, filename):
+        self.terminal = sys.stdout
+        self.log = open(filename, 'w', encoding='utf-8')
+        sys.stdout = self
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+        self.log.flush()
+
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+
+# Initialize logger with timestamp in filename
+timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+log_file = os.path.join(OUTPUT_DIR, f'metrics_{timestamp}.txt')
+logger = TeeLogger(log_file)
 
 USE_EMOJI = False
 
@@ -54,7 +82,8 @@ except ImportError:
     nltk.download('wordnet', quiet=True)
 
 def save_plot(plt, filename):
-    plt.savefig(filename)
+    output_path = os.path.join(OUTPUT_DIR, filename)
+    plt.savefig(output_path)
     plt.close()
 
 def preprocess_text(text):
@@ -299,7 +328,7 @@ def plot_class_distribution(y):
     plt.ylabel('Count')
     save_plot(plt, 'class_distribution.png')
 
-def analyze_feature_importance(model, X, y, n_features=100):  # Dramatically increased number of features to analyze
+def analyze_feature_importance(model, X, y, n_features=100):  
     tfidf = model.named_steps['tfidf']
     clf = model.named_steps['clf']
     feature_names = tfidf.get_feature_names_out()
@@ -317,22 +346,25 @@ def analyze_feature_importance(model, X, y, n_features=100):  # Dramatically inc
 
 analyze_feature_importance(grid_search.best_estimator_, X_train, y_train)
 
-# Calculate cross-validation scores
 cv_scores = cross_val_score(grid_search.best_estimator_, df['clean_text'], df['sentiment'], cv=5, scoring='f1_weighted')
 print("\nCross-validation scores:", cv_scores)
 print("Average CV score: %0.3f (+/- %0.3f)" % (cv_scores.mean(), cv_scores.std() * 2))
 
-# Generate all visualizations
-plot_metrics_comparison(y_test, y_pred)
-plot_feature_importance_heatmap(grid_search.best_estimator_)
-plot_class_distribution(y_train)
+timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
 
-# Plot learning curves
+plot_metrics_comparison(y_test, y_pred)
+save_plot(plt, f'metrics_comparison_{timestamp}.png')
+
+plot_feature_importance_heatmap(grid_search.best_estimator_)
+save_plot(plt, f'feature_importance_heatmap_{timestamp}.png')
+
+plot_class_distribution(y_train)
+save_plot(plt, f'class_distribution_{timestamp}.png')
+
 plot_learning_curve(grid_search.best_estimator_, 
                    "Learning Curves", X_train, y_train, cv=5)
-save_plot(plt, 'learning_curves.png')
+save_plot(plt, f'learning_curves_{timestamp}.png')
 
-# Plot confusion matrix with better styling
 plt.figure(figsize=(10, 8))
 cm = confusion_matrix(y_test, y_pred)
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
@@ -341,14 +373,19 @@ sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
 plt.title('Confusion Matrix')
 plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
-save_plot(plt, 'confusion_matrix.png')
+save_plot(plt, f'confusion_matrix_{timestamp}.png')
 
-# Plot cross-validation scores
 plt.figure(figsize=(8, 6))
 plt.boxplot(cv_scores)
 plt.title('Cross-validation Scores Distribution')
 plt.ylabel('F1 Score')
-save_plot(plt, 'cv_scores_distribution.png')
+save_plot(plt, f'cv_scores_distribution_{timestamp}.png')
+
+sys.stdout = logger.terminal
+logger.log.close()
+
+print(f"\nAll outputs have been saved to: {OUTPUT_DIR}")
+print(f"Metrics log file: {log_file}")
 
 def show_top_features(model, n=100):  
     tfidf = model.named_steps['tfidf']
