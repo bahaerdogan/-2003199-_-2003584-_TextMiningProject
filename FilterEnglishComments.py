@@ -2,7 +2,7 @@ import csv
 from langdetect import detect
 
 input_file = "AllCommentsBalanced.csv"
-output_file = "CommentsEnglish.csv"
+output_file = "CommentsEnglish2.csv"
 
 filtered_data = []
 

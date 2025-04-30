@@ -9,27 +9,34 @@ headers = {
 }
 
 films = {
-    "Interstellar": "https://letterboxd.com/film/interstellar",
-    "The Dark Knight": "https://letterboxd.com/film/the-dark-knight",
-    "Inception": "https://letterboxd.com/film/inception",
-    "Lord of War": "https://letterboxd.com/film/lord-of-war",
-    "The Zone of Interest": "https://letterboxd.com/film/the-zone-of-interest",
-    "Moneyball": "https://letterboxd.com/film/moneyball",
-    "The Last of the Mohicans": "https://letterboxd.com/film/the-last-of-the-mohicans",
-    "The Butterfly Effect": "https://letterboxd.com/film/the-butterfly-effect",
-    "Sicario": "https://letterboxd.com/film/sicario",
-    "The Hangover": "https://letterboxd.com/film/the-hangover",
-    "Mission: Impossible - Fallout": "https://letterboxd.com/film/mission-impossible-fallout",
-    "The Game": "https://letterboxd.com/film/the-game",
-    "Toy Story 4": "https://letterboxd.com/film/toy-story-4",
-    "The Last King of Scotland": "https://letterboxd.com/film/the-last-king-of-scotland",
-    "Enemy at the Gates": "https://letterboxd.com/film/enemy-at-the-gates",
-    "Fight Club": "https://letterboxd.com/film/fight-club",
-    "John Wick": "https://letterboxd.com/film/john-wick",
-    "The Matrix": "https://letterboxd.com/film/the-matrix",
-    "11 Rebels": "https://letterboxd.com/film/11-rebels",
-    "Top Gun": "https://letterboxd.com/film/top-gun",
+    "Blue Ruin": "https://letterboxd.com/film/blue-ruin/",
+    "The Rover": "https://letterboxd.com/film/the-rover-2014/",
+    "Cold in July": "https://letterboxd.com/film/cold-in-july/",
+    "A Hijacking": "https://letterboxd.com/film/a-hijacking/",
+    "Loveless": "https://letterboxd.com/film/loveless-2017/",
+    "Victoria": "https://letterboxd.com/film/victoria-2015/",
+    "Timecrimes": "https://letterboxd.com/film/timecrimes/",
+    "The Guilty": "https://letterboxd.com/film/the-guilty-2018/",
+    "Calibre": "https://letterboxd.com/film/calibre/",
+    "Coherence": "https://letterboxd.com/film/coherence/",
+    "Good Time": "https://letterboxd.com/film/good-time/",
+    "The Invitation": "https://letterboxd.com/film/the-invitation-2015/",
+    "Ida": "https://letterboxd.com/film/ida/",
+    "The Painted Bird": "https://letterboxd.com/film/the-painted-bird/",
+    "Leave No Trace": "https://letterboxd.com/film/leave-no-trace/",
+    "Children of Men": "https://letterboxd.com/film/children-of-men/",
+    "The Handmaiden": "https://letterboxd.com/film/the-handmaiden/",
+    "Oldboy": "https://letterboxd.com/film/oldboy/",
+    "The Master": "https://letterboxd.com/film/the-master-2012/",
+    "Pan’s Labyrinth": "https://letterboxd.com/film/pans-labyrinth/",
+    "Heat": "https://letterboxd.com/film/heat/",
+    "Memories of Murder": "https://letterboxd.com/film/memories-of-murder/",
+    "The Raid": "https://letterboxd.com/film/the-raid/",
+    "There Will Be Blood": "https://letterboxd.com/film/there-will-be-blood/",
+    "The Assassin": "https://letterboxd.com/film/the-assassin-2015/"
+    
 }
+
 
 output_data = []
 
