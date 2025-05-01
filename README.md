@@ -89,8 +89,4 @@ The model achieves:
 - Add cross-validation
 - Implement ensemble methods
 
-## License
-[Specify your license here]
 
-## Contributors
-[Add contributor information here]
