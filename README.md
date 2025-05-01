@@ -12,14 +12,13 @@ Naive bayes Classification Report:
 
               precision    recall  f1-score   support
 
-    Negative       0.61      0.54      0.57        26
-       Neut,       0.00      0.00      0.00         1
-     Neutral       1.00      0.04      0.08        25
-    Positive       0.40      0.91      0.56        22
+    negative       0.50      0.73      0.59        30
+     neutral       0.68      0.42      0.52        31
+    positive       0.59      0.55      0.57        31
 
-    accuracy                           0.47        74
-   macro avg       0.50      0.37      0.30        74
-weighted avg       0.67      0.47      0.39        74
+    accuracy                           0.57        92
+   macro avg       0.59      0.57      0.56        92
+weighted avg       0.59      0.57      0.56        92
 
 
 Confusion Matrix:
